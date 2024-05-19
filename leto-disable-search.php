@@ -197,5 +197,4 @@ class Leto_Disable_Search
 
 }
 
-// Instantiate and initialize the Singleton of the plugin.
 Leto_Disable_Search::get_instance();
