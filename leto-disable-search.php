@@ -3,7 +3,7 @@
  * Plugin Name:       Disable Search
  * Plugin URI:        https://letowp.de/
  * Description:       Disable the search capabilities of WordPress.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Thomas Lellesch
  * Requires at least: 6.0.0
  * Requires PHP:      8.0.0
@@ -18,6 +18,12 @@
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
+}
+
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+if(file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
+	require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
 class Leto_Disable_Search
@@ -55,7 +61,7 @@ class Leto_Disable_Search
      *
      * @var string
      */
-    const PLUGIN_VERSION = '1.0';
+    const PLUGIN_VERSION = '1.0.1';
 
     /**
      * Protected constructor to prevent creating a new instance of the Singleton
@@ -64,9 +70,6 @@ class Leto_Disable_Search
     protected function __construct()
     {
 
-		if(file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
-			require_once dirname( __FILE__ ) . '/vendor/autoload.php';
-		}
 
         $this->plugin_path = plugin_dir_path(__FILE__);
         $this->plugin_url = plugin_dir_url(__FILE__);
@@ -109,6 +112,16 @@ class Leto_Disable_Search
     {
         add_action('plugins_loaded', array($this, 'load_textdomain'));
         $this->setup_hooks();
+
+
+		if(is_admin())
+		{
+			$myUpdateChecker = PucFactory::buildUpdateChecker(
+				'https://files.letowp.de/plugins/leto-disable-search/update.json',
+				__FILE__,
+				self::TEXT_DOMAIN
+			);
+		}
     }
 
     /**
