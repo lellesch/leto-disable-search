@@ -4,6 +4,7 @@
 .LSOverride
 .idea
 vendor
+composer.lock
 
 # Icon must end with two \r
 Icon
