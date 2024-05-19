@@ -64,6 +64,10 @@ class Leto_Disable_Search
     protected function __construct()
     {
 
+		if(file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
+			require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+		}
+
         $this->plugin_path = plugin_dir_path(__FILE__);
         $this->plugin_url = plugin_dir_url(__FILE__);
 
